@@ -4,15 +4,15 @@ author: "Emmanuela van Versendaal"
 output: html_document
 ---
 
-1) Searching in Scopus, ScienceDirect, and Web of Science using the keywords: Nitrogen dilution curve’ & ‘Nitrogen nutrition index’ & ‘Critical nitrogen concentration’ & the name of each crop.
+1) Upload the data. After searching in Scopus, ScienceDirect, and Web of Science using the keywords: Nitrogen dilution curve’ & ‘Nitrogen nutrition index’ & ‘Critical nitrogen concentration’ & the name of each crop.
 
 2) Remove duplicates
 
-2) Filter papers that do not contain relevant keywords and abstract information.
-
-3) 
+3) Filter papers that do not contain relevant keywords and abstract information.
 
 4) Remove papers that do not contain data of biomass or nitrogen concentration for different sampling times
+
+5) extract figures information
 
 # Libraries
 ```{r}
