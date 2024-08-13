@@ -1,6 +1,6 @@
 # Critical Nitrogen Dilution Curve dataset
 
-This repository contains the R code used in the paper titled "A global dataset to parametrize critical nitrogen dilution curves for major crop species" published in Nature. This study conduct a systematic revire of the experimental data collected to parametrize critical N dilution curves.
+This repository contains the R code used to collect data in the paper titled "A global dataset to parametrize critical nitrogen dilution curves for major crop species" published in Nature. This study conduct a systematic revire of the experimental data collected to parametrize critical N dilution curves.
 
 ## The repository includes the code of:
 1) Data collection (using revtool package); 2) Figures (Sankey; Map; Dilution Curve per crop)
