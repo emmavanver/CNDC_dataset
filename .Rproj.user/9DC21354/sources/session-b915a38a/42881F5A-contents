@@ -1,0 +1,322 @@
+---
+title: "Data collection - Bibliography"
+author: "Emmanuela van Versendaal"
+output: html_document
+---
+
+1) Searching in Scopus, ScienceDirect, and Web of Science using the keywords: Nitrogen dilution curve’ & ‘Nitrogen nutrition index’ & ‘Critical nitrogen concentration’ & the name of each crop.
+
+2) Remove duplicates
+
+2) Filter papers that do not contain relevant keywords and abstract information.
+
+3) 
+
+4) Remove papers that do not contain data of biomass or nitrogen concentration for different sampling times
+
+# Libraries
+```{r}
+library(tidyverse)
+library(revtools) # screening papers
+library(juicr) # extract data from plots
+```
+
+# Filter per crop
+
+## Sorghum
+```{r}
+Sorgum_bibliography <- read_bibliography(c("../Data/ScienceDirect_sorghum.ris",
+                                           "../Data/scopus_sorghum.ris", 
+                                           "../Data/WebofScience_sorghum.ciw"))
+## Remove duplicates
+sorghum_unique <- extract_unique_references(sorghum_bibliography, 
+                                            find_duplicates(sorghum_bibliography))
+## Screen and filter by title
+screen_titles(sorghum_unique)
+sorghum_st <- read_csv("sorghum_st.csv")
+sorghum_st <- sorghum_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+sorghum_st$abstract
+screen_abstracts(sorghum_st%>% as.data.frame())  
+
+sorghum_final <- read_csv("sorghum_sa.csv")
+sorghum_final <- sorghum_final %>% filter(!screened_abstracts == "excluded")
+```
+
+
+## Corn
+```{r}
+corn_bibliography <- read_bibliography(c("../Data/ScienceDirect_corn.ris",  #ScienceDirect
+                                         "../Data/scopus_corn.ris",  # Scopus
+                                         "../Data/WebofScience_corn.ciw")) # Web of science
+## Remove duplicates
+corn_unique <- extract_unique_references(corn_bibliography, 
+                                         find_duplicates(corn_bibliography))
+## Screen and filter by title
+screen_titles(corn_unique)
+corn_st <- read_csv("corn_st.csv")
+corn_st <- corn_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+corn_st$abstract
+screen_abstracts(corn_st%>% as.data.frame())  
+
+corn_final <- read_csv("corn_sa.csv")
+corn_final <- corn_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Rice
+```{r}
+rice_bibliography <- read_bibliography(c("../Data/ScienceDirect_rice.ris",  #ScienceDirect
+                                         "../Data/scopus_rice.ris",  # Scopus
+                                         "../Data/WebofScience_rice.ciw")) # Web of science
+## Remove duplicates
+rice_unique <- extract_unique_references(rice_bibliography, 
+                                         find_duplicates(rice_bibliography))
+## Screen and filter by title
+screen_titles(rice_unique)
+rice_st <- read_csv("rice_st.csv")
+rice_st <- rice_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+rice_st$abstract
+screen_abstracts(rice_st%>% as.data.frame())  
+
+rice_final <- read_csv("rice_sa.csv")
+rice_final <- rice_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Wheat
+```{r}
+wheat_bibliography <- read_bibliography(c("../Data/ScienceDirect_wheat.ris",  #ScienceDirect
+                                         "../Data/scopus_wheat.ris",  # Scopus
+                                         "../Data/WebofScience_wheat.ciw")) # Web of science
+## Remove duplicates
+wheat_unique <- extract_unique_references(wheat_bibliography, 
+                                         find_duplicates(wheat_bibliography))
+## Screen and filter by title
+screen_titles(wheat_unique)
+wheat_st <- read_csv("wheat_st.csv")
+wheat_st <- wheat_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+wheat_st$abstract
+screen_abstracts(wheat_st%>% as.data.frame())  
+
+wheat_final <- read_csv("wheat_sa.csv")
+wheat_final <- wheat_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Grassess
+```{r}
+grassess_bibliography <- read_bibliography(c("../Data/ScienceDirect_grassess.ris",  #ScienceDirect
+                                         "../Data/scopus_grassess.ris",  # Scopus
+                                         "../Data/WebofScience_grassess.ciw")) # Web of science
+## Remove duplicates
+grassess_unique <- extract_unique_references(grassess_bibliography, 
+                                         find_duplicates(grassess_bibliography))
+## Screen and filter by title
+screen_titles(grassess_unique)
+grassess_st <- read_csv("grassess_st.csv")
+grassess_st <- grassess_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+grassess_st$abstract
+screen_abstracts(grassess_st%>% as.data.frame())  
+
+grassess_final <- read_csv("grassess_sa.csv")
+grassess_final <- grassess_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Sugarcane
+```{r}
+sugarcane_bibliography <- read_bibliography(c("../Data/ScienceDirect_sugarcane.ris",  #ScienceDirect
+                                         "../Data/scopus_sugarcane.ris",  # Scopus
+                                         "../Data/WebofScience_sugarcane.ciw")) # Web of science
+## Remove duplicates
+sugarcane_unique <- extract_unique_references(sugarcane_bibliography, 
+                                         find_duplicates(sugarcane_bibliography))
+## Screen and filter by title
+screen_titles(sugarcane_unique)
+sugarcane_st <- read_csv("sugarcane_st.csv")
+sugarcane_st <- sugarcane_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+sugarcane_st$abstract
+screen_abstracts(sugarcane_st%>% as.data.frame())  
+
+sugarcane_final <- read_csv("sugarcane_sa.csv")
+sugarcane_final <- sugarcane_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Potato
+```{r}
+potato_bibliography <- read_bibliography(c("../Data/ScienceDirect_potato.ris",  #ScienceDirect
+                                         "../Data/scopus_potato.ris",  # Scopus
+                                         "../Data/WebofScience_potato.ciw")) # Web of science
+## Remove duplicates
+potato_unique <- extract_unique_references(potato_bibliography, 
+                                         find_duplicates(potato_bibliography))
+## Screen and filter by title
+screen_titles(potato_unique)
+potato_st <- read_csv("potato_st.csv")
+potato_st <- potato_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+potato_st$abstract
+screen_abstracts(potato_st%>% as.data.frame())  
+
+potato_final <- read_csv("potato_sa.csv")
+potato_final <- potato_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Canola and Oliseed rape
+```{r}
+canola_oliseed_bibliography <- read_bibliography(c("../Data/ScienceDirect_canola_oliseed.ris",  #ScienceDirect
+                                         "../Data/scopus_canola_oliseed.ris",  # Scopus
+                                         "../Data/WebofScience_canola_oliseed.ciw")) # Web of science
+## Remove duplicates
+canola_oliseed_unique <- extract_unique_references(canola_oliseed_bibliography, 
+                                         find_duplicates(canola_oliseed_bibliography))
+## Screen and filter by title
+screen_titles(canola_oliseed_unique)
+canola_oliseed_st <- read_csv("canola_oliseed_st.csv")
+canola_oliseed_st <- canola_oliseed_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+canola_oliseed_st$abstract
+screen_abstracts(canola_oliseed_st%>% as.data.frame())  
+
+canola_oliseed_final <- read_csv("canola_oliseed_sa.csv")
+canola_oliseed_final <- canola_oliseed_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Cotton
+```{r}
+cotton_bibliography <- read_bibliography(c("../Data/ScienceDirect_cotton.ris",  #ScienceDirect
+                                         "../Data/scopus_cotton.ris",  # Scopus
+                                         "../Data/WebofScience_cotton.ciw")) # Web of science
+## Remove duplicates
+cotton_unique <- extract_unique_references(cotton_bibliography, 
+                                         find_duplicates(cotton_bibliography))
+## Screen and filter by title
+screen_titles(cotton_unique)
+cotton_st <- read_csv("cotton_st.csv")
+cotton_st <- cotton_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+cotton_st$abstract
+screen_abstracts(cotton_st%>% as.data.frame())  
+
+cotton_final <- read_csv("cotton_sa.csv")
+cotton_final <- cotton_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Sunflower
+```{r}
+sunflower_bibliography <- read_bibliography(c("../Data/ScienceDirect_sunflower.ris",  #ScienceDirect
+                                         "../Data/scopus_sunflower.ris",  # Scopus
+                                         "../Data/WebofScience_sunflower.ciw")) # Web of science
+## Remove duplicates
+sunflower_unique <- extract_unique_references(sunflower_bibliography, 
+                                         find_duplicates(sunflower_bibliography))
+## Screen and filter by title
+screen_titles(sunflower_unique)
+sunflower_st <- read_csv("sunflower_st.csv")
+sunflower_st <- sunflower_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+sunflower_st$abstract
+screen_abstracts(sunflower_st%>% as.data.frame())  
+
+sunflower_final <- read_csv("sunflower_sa.csv")
+sunflower_final <- sunflower_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Storage root crops
+```{r}
+storagerootcrops_bibliography <- read_bibliography(c("../Data/ScienceDirect_beet.ris",  #ScienceDirect
+                                                     "../Data/scopus_beet.ris",  # Scopus
+                                                     "../Data/WebofScience_beets.ciw")) # Web of science
+## Remove duplicates
+storagerootcrops_unique <- extract_unique_references(storagerootcrops_bibliography, 
+                                         find_duplicates(storagerootcrops_bibliography))
+## Screen and filter by title
+screen_titles(storagerootcrops_unique)
+storagerootcrops_st <- read_csv("storagerootcrops_st.csv")
+storagerootcrops_st <- storagerootcrops_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+storagerootcrops_st$abstract
+screen_abstracts(storagerootcrops_st%>% as.data.frame())  
+
+storagerootcrops_final <- read_csv("storagerootcrops_sa.csv")
+storagerootcrops_final <- storagerootcrops_final %>% filter(!screened_abstracts == "excluded")
+```
+
+## Legumes
+```{r}
+legumes_bibliography <- read_bibliography(c("../Data/ScienceDirect_legumes.ris",  #ScienceDirect
+                                         "../Data/scopus_legumes.ris",  # Scopus
+                                         "../Data/WebofScience_legumes.ciw")) # Web of science
+## Remove duplicates
+legumes_unique <- extract_unique_references(legumes_bibliography, 
+                                         find_duplicates(legumes_bibliography))
+## Screen and filter by title
+screen_titles(legumes_unique)
+legumes_st <- read_csv("legumes_st.csv")
+legumes_st <- legumes_st %>% filter(!screened_titles == "excluded")
+
+## Screen and filter by abstract
+legumes_st$abstract
+screen_abstracts(legumes_st%>% as.data.frame())  
+
+legumes_final <- read_csv("legumes_sa.csv")
+legumes_final <- legumes_final %>% filter(!screened_abstracts == "excluded")
+```
+
+# Merge datasets
+
+```{r}
+Papers_database <- list(canola_oliseed_final %>% mutate(Crop = "Canola"), 
+                        corn_final %>% mutate(Crop= "Corn"), 
+                        cotton_final %>% mutate(Crop= "Cotton"), 
+                        grasses_final %>% mutate(Crop= "Grasses"), 
+                        legumes_final %>% mutate(Crop= "Legumes"), 
+                        potato_final %>% mutate(Crop= "Potato"), 
+                        rice_final %>% mutate(Crop= "Rice"), 
+                        sorghum_final %>% mutate(Crop= "Sorghum"),
+                        storagerootcrops_final %>% mutate(Crop= "Storageroots"),
+                        sugarcane_final %>% mutate(Crop= "Suguarcane"), 
+                        sunflower_final %>% mutate(Crop= "Sunflower"), 
+                        wheat_final %>% mutate(Crop= "Wheat")) %>% 
+  map(.f = ~dplyr::select(.x,c(Crop, label, type, title, author, journal, 
+                               issue, volume, doi, url,source,
+                               screened_abstracts, screened_titles)))  %>% 
+  map(.f = ~mutate(.x, issue = as.character(issue)))  %>% 
+  map(.f = ~mutate(.x, volume = as.character(volume)))  %>% 
+  bind_rows() %>% 
+  rowid_to_column()
+```
+
+# Data extraction
+
+After filtering the papers, the final step involves opening each paper, screening the figures, and saving each figure in a folder. The figures should be labeled with the paper's ID number and the corresponding figure number. Next, use the juicr package in R to upload the images, and extract the data points from each figure.
+
+The code below is one example
+
+```{r}
+## Paper 141 (wheat paper)
+GUI_juicr("../../Data/Figures/141_Fig2a_juicr.png")
+GUI_juicr("../../Data/Figures/141_Fig2b.png")
+GUI_juicr("../Data/Figures/141_Fig2_c.png")
+GUI_juicr("../Data/Figures/141_Fig2_d.png")
+
+## paper 142 (wheat paper)
+GUI_juicr("../../Data/Figures/142_Fig2_a")
+GUI_juicr("../Data/Figures/142_Fig2_b.png")
+GUI_juicr("../Data/Figures/142_Fig2_c")
+GUI_juicr("../Data/Figures/142_Fig2_d.png")
+```
+
