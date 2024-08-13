@@ -1,0 +1,82 @@
+---
+title: "Figure_2"
+author: "Emmanuela van Versendaal"
+date: "2/2/2022"
+output: html_document
+---
+
+# Library
+```{r}
+library(tidyverse)
+
+library(dplyr, warn.conflicts = FALSE)
+library(tidygeocoder)
+
+library(OpenStreetMap)
+library(DT)
+library(RColorBrewer)
+library(mapproj)
+library(sf)
+library(RgoogleMaps)
+library(scales)
+library(rworldmap)
+library(maps)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(rgeos)
+library(ggspatial)
+library(maptools)
+library(leaflet)
+library(sf)
+library(here)
+library(rgdal)
+library(scales)
+library(flextable)
+library(rJava)
+# activate klippy for copy-to-clipboard button
+klippy::klippy()
+```
+
+# Map
+```{r, message=FALSE, warning=FALSE}
+## Dataset
+world <- ne_countries(scale='medium',returnclass = 'sf')
+
+NNI_database_coords <- readxl::read_xlsx("../Data/excel/NNI_coords.xlsx") 
+NNI_database_coords <-  NNI_database_coords %>%
+  select(Paper, Species, Loc, `Number of observations`) %>% 
+  unique() 
+
+## Adding the coordinates for each location
+coords <- NNI_database_coords %>% 
+  geocode(Loc, method = 'osm', lat = latitude, long = longitude) 
+  
+
+## Plotting the map
+World_map <- 
+ggplot(data = world %>% filter(name!="Antarctica")) +
+  geom_sf(fill = "#FAFAF2") +
+  geom_point(data = coords, 
+             aes(x = longitude, y = latitude, colour = Species, size = `Number of observations`), 
+             alpha = 0.6, show.legend = TRUE)+
+  guides(col=guide_legend(ncol=2)) +
+  theme(panel.background = element_rect(fill = "#E5F0FF",
+                                colour = "#E5F0FF"),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        # surpress legend
+        legend.position = "bottom",
+        axis.line=element_blank(),
+        axis.text.x=element_blank(),
+        #axis.text.y=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.key.size = unit(0.05, 'cm'),
+        legend.title=element_text(size=8), 
+        legend.text=element_text(size=7))
+
+ggsave("../Output/Map/World_map.tiff", height = 5, width = 9) 
+
+```
+

@@ -1,0 +1,49 @@
+---
+title: "Figure 1 - Sankey diagram"
+author: "Emmanuela van Versendaal"
+date: "2/2/2022"
+output: html_document
+---
+
+#Library
+```{r}
+library(tidyverse)
+library(ggsankey)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+## Data
+Sankey <- readxl::read_xlsx("../Data/excel/Sankey_df.xlsx")
+
+## Sankey code
+Sankey_diagram <- Sankey %>%
+  make_long(`Downloaded title`, `Filtered by title`, `Filtered by abstract`, `Filtered by data`,
+            value = n) %>% 
+ggplot(aes(value = value,
+           x = x, 
+           next_x = next_x,
+           node = node,
+           next_node = next_node,
+           fill = node,
+           label = node)) +
+  geom_sankey(flow.alpha = .6,
+              node.color = "gray30") +
+  geom_sankey_label(size = 4, 
+                    color = "white", 
+                    fill = "grey15") +
+  scale_fill_manual(values = c("grey40",
+                                "grey40", 
+                                "grey40",
+                                "darkgreen",
+                                "darkgreen",
+                                "darkgreen",
+                               "darkgreen")) +
+  theme_sankey(base_size = 20) +
+  labs(x = NULL) +
+  theme(legend.position = "Null")
+
+
+ggsave("../Output/Sankey/Sankey_diagram.tiff", height = 7, width = 12)
+
+```

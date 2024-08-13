@@ -1,0 +1,64 @@
+---
+title: "Figure_3"
+author: "Emmanuela van Versendaal"
+date: "2/2/2022"
+output: html_document
+---
+
+# Library
+```{r}
+library(tidyverse)
+```
+
+# NNI Curves
+```{r, message=FALSE, warning=FALSE}
+
+## NNI dataset
+NNI_database <- read.csv("../Data/excel/NNI_dataset.csv") %>% 
+  mutate(`N%` = ifelse(is.na(Nupt_kg_ha), `N...`, 100* `Nupt_kg_ha`/W_kg_ha)) %>% 
+   mutate(W_ton_ha = (W_kg_ha/1000))
+
+
+## Position of the n labels
+positions <- NNI_database %>%
+  filter(!is.nan(`N%`)) %>% 
+  group_by(Species) %>% 
+  mutate(n = length(unique(Paper))) %>% ungroup() %>% 
+  group_by(Species, n) %>% 
+  summarise(xpos = max(W_ton_ha, na.rm = TRUE) - .1*(max(W_ton_ha, na.rm = TRUE)-min(W_ton_ha, na.rm = TRUE)),
+            ypos = max(`N%`, na.rm = TRUE) - .1*(max(`N%`, na.rm = TRUE)-min(`N%`, na.rm = TRUE))) %>% 
+              ungroup()
+
+
+label_fescue <- data.frame(Species = "Tall fescue", xpos = 7, ypos = 4,  n = 4)
+label_sunflower <- data.frame(Species = "Sunflower", xpos = 15, ypos = 4,  n = 1)
+
+levels(NNI_database$Paper %>% as.factor())
+
+## Plotting all the curves for Species
+NNI_database_plot <- NNI_database %>% 
+  group_by(Species, Paper) %>% 
+  nest() %>% 
+  ungroup(Paper) %>% 
+  mutate(id_s = seq(1, length(Paper), by = 1)) %>% 
+  ungroup() %>% 
+  unnest(data) %>% 
+  mutate(`N%` = ifelse(is.na(Nupt_kg_ha), `N...`, 100* `Nupt_kg_ha`/W_kg_ha)) %>%
+  group_by(Species) %>% 
+  mutate(n = length(unique(Paper))) %>%
+  ungroup() %>% 
+  ggplot(aes(W_ton_ha, `N%`))+
+  geom_point(aes(color = Species, shape = factor(id_s)), alpha = 0.5, show.legend = F, size = 1.5)+
+  facet_wrap(~Species, scales = "free")+
+  geom_text(aes(label = paste("n = ", n, sep = ""), x =xpos, y =ypos), fontface = "italic", size = 2.5, data = positions)+
+  geom_text(aes(label = paste("n = ", n, sep = ""), x =xpos, y =ypos), 
+            fontface = "italic", size = 2.5, data = label_fescue)+
+  geom_text(aes(label = paste("n = ", n, sep = ""), x =xpos, y =ypos), 
+            fontface = "italic", size = 2.5, data = label_sunflower)+
+  labs(x = expression(Biomass~(W~`, `~Mg~ha^{-1})),
+       y = expression(`N concentration, %N (%)`))+ 
+    theme_bw()
+
+ggsave("../Output/Dilution curve/NNI_database_plot.tiff", height = 7, width = 10)  
+
+```
