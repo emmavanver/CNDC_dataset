@@ -3,7 +3,8 @@
 This repository contains the R code used to collect data in the paper titled "A global dataset to parametrize critical nitrogen dilution curves for major crop species" published in Nature. This study conduct a systematic review of the experimental data collected to parametrize critical N dilution curves.
 
 ## The repository includes the code of:
-1) Data collection (using revtool package); 2) Figures (Sankey; Map; Dilution Curve per crop)
+1) Data collection (Searching papers, remove duplicates, filter by title and abstract, extract figure information);
+2) Figures (Sankey; Map; Dilution Curve per crop)
 
 ## Paper Reference
 
